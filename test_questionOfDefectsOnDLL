@@ -1,0 +1,36 @@
+bool isListStructureValid(Node* head) {
+    if (head == nullptr) return true; // An empty list is valid.
+
+    Node* current = head;
+    Node* prev = nullptr;
+
+    // Traverse forward and check forward-backward consistency
+    while (current != nullptr) {
+        // If previous node exists, check that current.prev points to it
+        if (current->prev != prev) {
+            return false; // Defect found
+        }
+
+        // Move to the next node
+        prev = current;
+        current = current->next;
+    }
+
+    // Now 'prev' is at the tail (last node from forward traversal)
+    current = prev;
+    Node* next = nullptr;
+
+    // Traverse backward and check backward-forward consistency
+    while (current != nullptr) {
+        // If next node exists, check that current.next points to it
+        if (current->next != next) {
+            return false; // Defect found
+        }
+
+        // Move to the previous node
+        next = current;
+        current = current->prev;
+    }
+
+    return true; // No structural issues found
+}
